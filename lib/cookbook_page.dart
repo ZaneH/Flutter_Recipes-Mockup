@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'recipe.dart';
 import 'recipe_page.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/services.dart';
 
 class CookBookPage extends StatefulWidget {
   CookBookPage({Key key}) : super(key: key);
@@ -47,7 +48,7 @@ class _CookBookPageState extends State<CookBookPage> {
             ),
           ],
         ),
-        width: MediaQuery.of(ctx).size.width / 1.1,
+        width: MediaQuery.of(ctx).size.width * 0.88,
         height: 440,
         child: ClipRRect(
           borderRadius: BorderRadius.circular(20),
@@ -113,39 +114,43 @@ class _CookBookPageState extends State<CookBookPage> {
         .collection('recipes')
         .orderBy('likes', descending: true)
         .snapshots();
+
     return StreamBuilder(
       stream: recipeStream,
       builder: (context, snapshot) {
-        if (snapshot.data == null ||
-            snapshot.connectionState == ConnectionState.none ||
-            snapshot.connectionState == ConnectionState.waiting) {
-          return SizedBox(
-            width: 64,
-            height: 64,
-            child: Center(
-              child: CircularProgressIndicator(
-                strokeWidth: 2,
-              ),
-            ),
-          );
+        if (snapshot.data != null && snapshot.data.documents != null) {
+          // populate recipes
+          recipes.clear();
+          for (dynamic d in snapshot.data.documents) {
+            Recipe r = Recipe.fromMap(d.data);
+            recipes.add(r);
+          }
         }
 
         return ListView.separated(
           physics: NeverScrollableScrollPhysics(),
-          itemCount:
-              (snapshot.data != null) ? snapshot.data.documents.length : 1,
+          itemCount: (snapshot.data != null && recipes.length > 0)
+              ? snapshot.data.documents.length
+              : 1,
           itemBuilder: (ctx, idx) {
-            Recipe displRecipe =
-                Recipe.fromMap(snapshot.data.documents[idx].data);
-
-            recipes.add(displRecipe);
-
-            if (snapshot.hasData && snapshot.data != null) {
+            if (snapshot.hasData &&
+                snapshot.data != null &&
+                recipes.length > 0) {
               return Center(
                 child: _buildCard(
                   ctx,
                   recipes[idx],
                   idx,
+                ),
+              );
+            } else {
+              return SizedBox(
+                width: 64,
+                height: 64,
+                child: Center(
+                  child: CircularProgressIndicator(
+                    strokeWidth: 2,
+                  ),
                 ),
               );
             }
@@ -162,6 +167,8 @@ class _CookBookPageState extends State<CookBookPage> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
+
     return Scaffold(
       backgroundColor: Colors.white,
       // stack so we can put a backdrop and content
@@ -175,6 +182,10 @@ class _CookBookPageState extends State<CookBookPage> {
           // nested scroll view for collapsable header
           NestedScrollView(
             headerSliverBuilder: (_, isInnerBoxScrolled) {
+              if (isInnerBoxScrolled) {
+                SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
+              }
+
               return [
                 SliverAppBar(
                   backgroundColor: Colors.transparent,

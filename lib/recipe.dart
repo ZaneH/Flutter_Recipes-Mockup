@@ -5,6 +5,14 @@ class Recipe {
   final String description;
   final List<dynamic> materials;
 
+  @override
+  bool operator==(Object other) {
+    if (other is! Recipe) return false;
+
+    Recipe r = other;
+    return r.name == this.name || other == this.name;
+  }
+
   static Recipe fromMap(Map<String, dynamic> data) {
     return Recipe(
       name: data['name'],

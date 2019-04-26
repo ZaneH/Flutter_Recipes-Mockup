@@ -70,6 +70,8 @@ PODS:
     - GoogleUtilities/Environment (~> 5.2)
     - GoogleUtilities/UserDefaults (~> 5.2)
   - Flutter (1.0.0)
+  - flutter_statusbarcolor (0.0.1):
+    - Flutter
   - FMDB (2.7.5):
     - FMDB/standard (= 2.7.5)
   - FMDB/standard (2.7.5)
@@ -131,6 +133,7 @@ DEPENDENCIES:
   - cloud_firestore (from `.symlinks/plugins/cloud_firestore/ios`)
   - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
   - Flutter (from `.symlinks/flutter/ios`)
+  - flutter_statusbarcolor (from `.symlinks/plugins/flutter_statusbarcolor/ios`)
   - path_provider (from `.symlinks/plugins/path_provider/ios`)
   - sqflite (from `.symlinks/plugins/sqflite/ios`)
 
@@ -162,6 +165,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/firebase_core/ios"
   Flutter:
     :path: ".symlinks/flutter/ios"
+  flutter_statusbarcolor:
+    :path: ".symlinks/plugins/flutter_statusbarcolor/ios"
   path_provider:
     :path: ".symlinks/plugins/path_provider/ios"
   sqflite:
@@ -180,6 +185,7 @@ SPEC CHECKSUMS:
   FirebaseFirestore: faca891c0f0d1d6c10c793473e2f6a29d75014b5
   FirebaseInstanceID: a122b0c258720cf250551bb2bedf48c699f80d90
   Flutter: 9d0fac939486c9aba2809b7982dfdbb47a7b0296
+  flutter_statusbarcolor: ccc8f90efe5e571f817aaed60dac5382d2cec98d
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   GoogleAppMeasurement: ffe513e90551844a739e7bcbb1d2aca1c28a4338
   GoogleUtilities: 04fce34bcd5620c1ee76fb79172105c74a4df335

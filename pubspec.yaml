@@ -23,6 +23,9 @@ dependencies:
   # cache images
   cached_network_image: ^0.7.0
 
+  # status bar colors
+  flutter_statusbarcolor: ^0.2.0
+
   # firebase modules
   firebase_core: ^0.3.0
   cloud_firestore: ^0.9.13
